@@ -1,6 +1,9 @@
+import RideCard from "@/components/RideCard";
+import { rides } from "@/mock/rides";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
+import { FlatList } from "react-native-reanimated/lib/typescript/Animated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Page() {
@@ -8,17 +11,10 @@ export default function Page() {
 
   return (
     <SafeAreaView>
-      <SignedIn>
-        <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
-      </SignedIn>
-      <SignedOut>
-        <Link href="/sign-in">
-          <Text>Sign In</Text>
-        </Link>
-        <Link href="/sign-up">
-          <Text>Sign Up</Text>
-        </Link>
-      </SignedOut>
+      <FlatList
+        data={rides.slice(0, 5)}
+        renderItem={({ item }) => <RideCard ride={item} />}
+      />
     </SafeAreaView>
   );
 }
